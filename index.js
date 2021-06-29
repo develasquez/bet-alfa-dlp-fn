@@ -1,12 +1,14 @@
 const { PubSub } = require(`@google-cloud/pubsub`);
 const Buffer = require('safe-buffer').Buffer;
 const DESTINATION_TOPIC = `projects/${process.env.PROJECT_ID}/topics/${process.env.DESTINATION_TOPIC}`;
+const DLP = require('@google-cloud/dlp');
+const dlp = new DLP.DlpServiceClient();
 
 exports.fnDlp = async (message, context) => {
     const data = message.data
         ? Buffer.from(message.data, 'base64').toString()
         : '';
-    const deideData = deidentifyWithFpe(data);
+    const deideData = await deidentifyWithFpe(data);
     sendToPubsub(DESTINATION_TOPIC, deideData);
 };
 
@@ -58,7 +60,8 @@ async function deidentifyWithFpe(data) {
             }
         };
         const [response] = await dlp.deidentifyContent(req);
-        return response.item;
+        console.log(response.item.value);
+        return JSON.parse(response.item.value);
     } catch (ex) {
         console.log(ex)
     }

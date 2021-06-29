@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/dlp": "^3.1.4",
     "@google-cloud/pubsub": "^2.15.1",
     "safe-buffer": "^5.2.1"
   }
