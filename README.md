@@ -1,0 +1,1 @@
+gsutil mb gs://bet-alfa-astro-deploy-fn
