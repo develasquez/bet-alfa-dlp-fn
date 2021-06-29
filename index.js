@@ -22,7 +22,7 @@ async function deidentifyWithFpe(data) {
             "item": {
                 "value": data
             },
-            "parent": `projects/${projectId}/locations/global`,
+            "parent": `projects/${process.env.PROJECT_ID}/locations/global`,
             "deidentifyConfig": {
                 "infoTypeTransformations": {
                     "transformations": [
@@ -36,8 +36,8 @@ async function deidentifyWithFpe(data) {
                                 "cryptoDeterministicConfig": {
                                     "cryptoKey": {
                                         "kmsWrapped": {
-                                            "cryptoKeyName": keyName,
-                                            "wrappedKey": wrappedKey
+                                            "cryptoKeyName": process.env.KEYNAME,
+                                            "wrappedKey": process.env.WRAPPEDKEY
                                         }
                                     },
                                     "surrogateInfoType": {
